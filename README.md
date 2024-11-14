@@ -1,2 +1,2 @@
 # Student-Attendance
-taking student attendance using a card scanner 
+Under development at this moment ;)
