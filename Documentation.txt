@@ -1,0 +1,7 @@
+// DB design : 
+
+Students : id , name , cardID , department , division ( A,B,C,D) , year ( 1 , 2 , 3 , 4)
+Classes : id , courseName , startTime , endTime
+Attendance record : studentID , calssID , date ( when student scnned ) , status ( present , absent ) , remarks ( additional notes (late by 10 minutes) ) 
+
+// additional parts for DB
