@@ -1,0 +1,24 @@
+[
+  {
+    "displayid": "1",
+    "firstname": "عبدالله",
+    "secondname": "عمر",
+    "thirdname": "صلاح الدين",
+    "lastname": "قاسم",
+    "cardid": "1326351",
+    "departmentid": "1",
+    "groupid": "3",
+    "yearid": "3"
+  },
+  {
+    "displayid": "1",
+    "firstname": "عبدالله",
+    "secondname": "وليد",
+    "thirdname": "حامد",
+    "lastname": "خضر",
+    "cardid": "536246",
+    "departmentid": "1",
+    "groupid": "1",
+    "yearid": "3"
+  }
+]

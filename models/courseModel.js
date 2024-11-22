@@ -1,50 +1,47 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../sequelizeConnection');
-const student = require('./studentModel');
-const course = require('./courseModel');
+const collegeYear = require('./collegeYearModel');
+const department = require('./departmentModel');
 
-const attendance = sequelize.define(
-  'attendance',
+const course = sequelize.define(
+  'course',
   {
-    attendanceid: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      autoIncrement: true,
-      primaryKey: true,
-    },
-    attendancedate: {
-      type: DataTypes.DATEONLY,
-      allowNull: false,
-    },
-    attendancestatus: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    notes: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    studentid: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      references: {
-        model: student,
-        key: 'studentid',
-      },
-    },
     courseid: {
       type: DataTypes.INTEGER,
+      autoIncrement: true,
+      allowNull: false,
+      primaryKey: true,
+    },
+    coursename: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      unique: true,
+    },
+    semister: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    departmentid: {
+      type: DataTypes.INTEGER,
       allowNull: false,
       references: {
-        model: course,
-        key: 'courseid',
+        model: department,
+        key: 'departmentid',
+      },
+    },
+    yearid: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: collegeYear,
+        key: 'yearid',
       },
     },
   },
   {
-    tableName: 'attendances',
+    tableName: 'courses',
     timestamps: false,
   }
 );
 
-module.exports = attendance;
+module.exports = course;
