@@ -17,7 +17,7 @@ const course = sequelize.define(
       allowNull: false,
       unique: true,
     },
-    semister: {
+    semester: {
       type: DataTypes.STRING,
       allowNull: false,
     },

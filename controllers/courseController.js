@@ -24,7 +24,7 @@ exports.createCourse = async (req, res) => {
       coursename: req.body.coursename,
     });
 
-    res.status(200).json({
+    res.status(201).json({
       status: 'success',
       data: {
         newCourse,

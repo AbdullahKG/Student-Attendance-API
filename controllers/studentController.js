@@ -32,7 +32,7 @@ exports.CreateStudent = async (req, res) => {
       groupid: req.body.groupid,
     });
 
-    res.status(200).json({
+    res.status(201).json({
       status: 'success',
       data: {
         newStudent,

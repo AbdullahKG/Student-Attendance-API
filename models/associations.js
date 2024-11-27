@@ -60,6 +60,22 @@ student.belongsTo(group, {
   foreignKey: 'groupid',
 });
 
-// M:M relationship between student & course
-student.belongsToMany(course, { through: attendance });
-course.belongsToMany(student, { through: attendance });
+// Student 1:M Attendance
+student.hasMany(attendance, {
+  foreignKey: 'studentid',
+  onDelete: 'CASCADE',
+  onUpdate: 'CASCADE',
+});
+attendance.belongsTo(student, {
+  foreignKey: 'studentid',
+});
+
+// Course 1:M Attendance
+course.hasMany(attendance, {
+  foreignKey: 'courseid',
+  onDelete: 'CASCADE',
+  onUpdate: 'CASCADE',
+});
+attendance.belongsTo(course, {
+  foreignKey: 'courseid',
+});

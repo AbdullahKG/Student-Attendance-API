@@ -34,7 +34,7 @@ const student = sequelize.define(
       allowNull: false,
     },
     cardid: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.STRING,
       allowNull: false,
       unique: true,
     },

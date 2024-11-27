@@ -28,7 +28,7 @@ exports.createCollegeYear = async (req, res) => {
       yearname: req.body.yearname,
     });
 
-    res.status(200).json({
+    res.status(201).json({
       status: 'success',
       data: {
         newCollegeYear,

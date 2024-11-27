@@ -28,7 +28,7 @@ exports.createDepartment = async (req, res) => {
       departmentname: req.body.departmentname,
     });
 
-    res.status(200).json({
+    res.status(201).json({
       status: 'success',
       data: {
         newDepartment,

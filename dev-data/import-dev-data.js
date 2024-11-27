@@ -54,7 +54,7 @@ const importData = async () => {
     //await groupModel.bulkCreate(groupData);
     //await departmentModel.bulkCreate(departmentData);
     //await courseModel.bulkCreate(courseData);
-    await studentModel.bulkCreate(studentData);
+    //await studentModel.bulkCreate(studentData);
     console.log('Data successfully loaded!');
   } catch (err) {
     console.log(err);
@@ -71,7 +71,7 @@ const deleteData = async () => {
     //await groupModel.destroy({ truncate: true });
     //await departmentModel.destroy({ truencate: true });
     //await courseModel.destroy({ truncate: true });
-    await courseModel.destroy({ truncate: true });
+    await studentModel.destroy({ truncate: true });
     console.log('Data successfully deleted!');
   } catch (err) {
     console.log(err);

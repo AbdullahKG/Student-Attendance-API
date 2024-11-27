@@ -20,10 +20,6 @@ const attendance = sequelize.define(
       type: DataTypes.STRING,
       allowNull: false,
     },
-    notes: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
     studentid: {
       type: DataTypes.INTEGER,
       allowNull: false,
