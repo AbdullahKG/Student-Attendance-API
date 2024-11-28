@@ -1,103 +1,83 @@
 const { Course } = require('../models/centralizedExports');
+const catchAsync = require('../utils/catchAsync');
+const AppError = require('../utils/appError');
 
-exports.getAllCourses = async (req, res) => {
-  try {
-    const course = await Course.findAll();
+exports.getAllCourses = catchAsync(async (req, res, next) => {
+  const course = await Course.findAll();
 
-    res.status(200).json({
-      status: 'success',
-      data: {
-        course,
-      },
-    });
-  } catch (err) {
-    res.status(404).json({
-      status: 'fail',
-      message: err,
-    });
-  }
-};
+  res.status(200).json({
+    status: 'success',
+    data: {
+      course,
+    },
+  });
+});
 
-exports.createCourse = async (req, res) => {
-  try {
-    const newCourse = await Course.create({
-      coursename: req.body.coursename,
-    });
+exports.createCourse = catchAsync(async (req, res, next) => {
+  const newCourse = await Course.create({
+    coursename: req.body.coursename,
+  });
 
-    res.status(201).json({
-      status: 'success',
-      data: {
-        newCourse,
-      },
-    });
-  } catch (err) {
-    res.status(404).json({
-      status: 'fail',
-      message: err,
-    });
-  }
-};
+  res.status(201).json({
+    status: 'success',
+    data: {
+      newCourse,
+    },
+  });
+});
 
-exports.getCourse = async (req, res) => {
-  try {
-    const course = await Course.findByPk(req.params.courseid);
+exports.getCourse = catchAsync(async (req, res, next) => {
+  const course = await Course.findByPk(req.params.courseid);
 
-    res.status(200).json({
-      status: 'success',
-      data: {
-        course,
-      },
-    });
-  } catch (err) {
-    res.status(404).json({
-      status: 'fail',
-      message: err,
-    });
-  }
-};
-
-exports.updateCourse = async (req, res) => {
-  try {
-    const [updatedRows] = await Course.update(
-      { coursename: req.body.coursename },
-      {
-        where: {
-          courseid: req.params.courseid,
-        },
-      }
+  if (!course) {
+    return next(
+      new AppError(`there is no course for this id ${req.params.courseid}`)
     );
-
-    res.status(200).json({
-      status: 'success',
-      message: 'Course updated successfully!',
-      rowsAffected: updatedRows,
-    });
-  } catch (err) {
-    res.status(404).json({
-      status: 'fail',
-      message: err,
-    });
   }
-};
 
-exports.deleteCourse = async (req, res) => {
-  try {
-    const deletedRows = await Course.destroy({
+  res.status(200).json({
+    status: 'success',
+    data: {
+      course,
+    },
+  });
+});
+
+exports.updateCourse = catchAsync(async (req, res, next) => {
+  const [updatedRows] = await Course.update(
+    { coursename: req.body.coursename },
+    {
       where: {
         courseid: req.params.courseid,
       },
-    });
+    }
+  );
 
-    res.status(200).json({
-      status: 'successful',
-      message: `Course with courseid = (${req.params.courseid}) deleted succesfuly`,
-      rowsAffected: deletedRows,
-    });
-  } catch (err) {
-    res.status(404).json({
-      status: 'fail',
-      message: err,
-    });
-    console.log(err);
+  if (!updatedRows) {
+    return next(new AppError('no rows were updated', 404));
   }
-};
+
+  res.status(200).json({
+    status: 'success',
+    message: 'Course updated successfully!',
+    rowsAffected: updatedRows,
+  });
+});
+
+exports.deleteCourse = catchAsync(async (req, res, next) => {
+  const deletedRows = await Course.destroy({
+    where: {
+      courseid: req.params.courseid,
+    },
+  });
+
+  if (!deletedRows) {
+    return next(new AppError('no rows were deleted', 404));
+  }
+
+  res.status(200).json({
+    status: 'successful',
+    message: `Course with courseid = (${req.params.courseid}) deleted succesfuly`,
+    rowsAffected: deletedRows,
+  });
+});
