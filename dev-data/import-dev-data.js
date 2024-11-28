@@ -71,7 +71,7 @@ const deleteData = async () => {
     //await groupModel.destroy({ truncate: true });
     //await departmentModel.destroy({ truencate: true });
     //await courseModel.destroy({ truncate: true });
-    await studentModel.destroy({ truncate: true });
+    //await studentModel.destroy({ truncate: true });
     console.log('Data successfully deleted!');
   } catch (err) {
     console.log(err);

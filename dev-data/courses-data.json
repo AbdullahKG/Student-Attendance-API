@@ -1,79 +1,79 @@
 [
   {
     "coursename": "Cyber Security Programming Theory",
-    "semister": "First Semister",
+    "semester": "First Semister",
     "departmentid": "1",
     "yearid": "3"
   },
   {
     "coursename": "Practical Cyber Security Programming",
-    "semister": "First Semister",
+    "semester": "First Semister",
     "departmentid": "1",
     "yearid": "3"
   },
   {
     "coursename": "Computer Networks Theory",
-    "semister": "First Semister",
+    "semester": "First Semister",
     "departmentid": "1",
     "yearid": "3"
   },
   {
     "coursename": "Practical Computer Networks",
-    "semister": "First Semister",
+    "semester": "First Semister",
     "departmentid": "1",
     "yearid": "3"
   },
   {
     "coursename": "Artificial Intelligence Theory",
-    "semister": "First Semister",
+    "semester": "First Semister",
     "departmentid": "1",
     "yearid": "3"
   },
   {
     "coursename": "Practical Artificial Intelligence",
-    "semister": "First Semister",
+    "semester": "First Semister",
     "departmentid": "1",
     "yearid": "3"
   },
   {
     "coursename": "Malware Theory",
-    "semister": "First Semister",
+    "semester": "First Semister",
     "departmentid": "1",
     "yearid": "3"
   },
   {
     "coursename": "Practical Malware",
-    "semister": "First Semister",
+    "semester": "First Semister",
     "departmentid": "1",
     "yearid": "3"
   },
   {
     "coursename": "Cloud Computing Theory",
-    "semister": "First Semister",
+    "semester": "First Semister",
     "departmentid": "1",
     "yearid": "3"
   },
   {
     "coursename": "Practical Cloud Computing",
-    "semister": "First Semister",
+    "semester": "First Semister",
     "departmentid": "1",
     "yearid": "3"
   },
   {
     "coursename": "Computer Architecture",
-    "semister": "First Semister",
+    "semester": "First Semister",
     "departmentid": "1",
     "yearid": "3"
   },
   {
     "coursename": "Public-key Cryptography Theory",
-    "semister": "First Semister",
+    "semester": "First Semister",
     "departmentid": "1",
     "yearid": "3"
   },
   {
     "coursename": "Practical Public-key Cryptography",
-    "semister": "First Semister",
+    "semester": "First Semister",
     "departmentid": "1",
     "yearid": "3"
   }

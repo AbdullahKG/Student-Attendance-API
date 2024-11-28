@@ -1,5 +1,7 @@
 const { where } = require('sequelize');
 const { CollegeYear } = require('../models/centralizedExports');
+const catchAsync = require('../utils/catchAsync');
+const AppError = require('../utils/appError');
 
 exports.getAllCollegeYears = async (req, res) => {
   try {
@@ -22,25 +24,18 @@ exports.getAllCollegeYears = async (req, res) => {
   }
 };
 
-exports.createCollegeYear = async (req, res) => {
-  try {
-    const newCollegeYear = await CollegeYear.create({
-      yearname: req.body.yearname,
-    });
+exports.createCollegeYear = catchAsync(async (req, res) => {
+  const newCollegeYear = await CollegeYear.create({
+    yearname: req.body.yearname,
+  });
 
-    res.status(201).json({
-      status: 'success',
-      data: {
-        newCollegeYear,
-      },
-    });
-  } catch (err) {
-    res.status(404).json({
-      status: 'fail',
-      message: err,
-    });
-  }
-};
+  res.status(201).json({
+    status: 'success',
+    data: {
+      newCollegeYear,
+    },
+  });
+});
 
 exports.getCollegeYear = async (req, res) => {
   try {
