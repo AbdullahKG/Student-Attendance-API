@@ -1,5 +1,6 @@
 const dotenv = require('dotenv');
 const sequelize = require('./sequelizeConnection');
+const { initializeSocket } = require('./socketio/socket');
 
 process.on('uncaughtException', (err) => {
   console.log('UNCAUGHT EXCEPTION! 💥 Shutting down...');
@@ -24,6 +25,8 @@ const port = process.env.PORT || 3000;
 const server = app.listen(port, () => {
   console.log(`app listening on port ${port} ...`);
 });
+
+initializeSocket(server);
 
 process.on('unhandledRejection', (err) => {
   console.log('UNHANDLED REJECTION! 💥 Shutting down...');
