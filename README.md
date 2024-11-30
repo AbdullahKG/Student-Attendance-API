@@ -7,7 +7,7 @@
 5. [API Documentation](#api-documentation)
 6. [Database Design](#database-design)
 7. [Usage](#usage)
-8. [Contributing Policy](#contributing)
+8. [Contributing Policy](#contributing-policy)
 9. [License](#license)
 
 ---
@@ -58,13 +58,16 @@ This is a **Node.js** and **Arduino**-based back-end system for managing student
 ```
 
 3. Set up environment variables: Create a .env file with the following variables:
-   NODE_ENV=development ,
-   PORT = your-port,
-   DB_HOST = localhost,
-   DB_DIALECT = mysql,
-   DB_USER_NAME = your-user-name,
-   DB_PASSWORD = your-password,
-   DB = your-db-name,
+
+```plaintext
+ NODE_ENV=development
+ PORT = your-port
+ DB_HOST = localhost
+ DB_DIALECT = mysql
+ DB_USER_NAME = your-user-name
+ DB_PASSWORD = your-password
+ DB = your-db-name
+```
 
 ---
 
@@ -74,6 +77,8 @@ Base URL :
 http://localhost:3000/api/v1
 
 Endpoints :
+
+```plaintext
 
 1. Students:
    GET /students: Retrieve all students. ,
@@ -113,6 +118,7 @@ Endpoints :
 6. Attendance:
    GET /attendances: Retrieve all attendance records. ,
    POST /attendances: Add a new attendance record. ,
+```
 
 ---
 
