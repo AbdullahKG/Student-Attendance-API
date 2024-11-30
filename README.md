@@ -41,7 +41,7 @@ This is a **Node.js** and **Arduino**-based back-end system for managing student
 ### Prerequisites
 
 - Node.js and npm installed.
-- MongoDB instance running.
+- MySql instance running.
 - Arduino Uno with an RC522 RFID module set up.
 
 1. Clone the repository:
