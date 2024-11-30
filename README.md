@@ -33,6 +33,8 @@ This is a **Node.js** and **Arduino**-based back-end system for managing student
 - **Express.js**: Web framework for building APIs.
 - **MySql**: Database for storing student , classes , attendance records , etc. .
 - **Socket.IO**: Real-time communication between the server and the client to send the cardid from the arduino.
+- **SerialPort**: To handle serial communication with the Arduino for RFID scanning.
+- **Sequelize**: ORM for interacting with SQL databases like MySQL for storing structured data.
 
 ---
 
