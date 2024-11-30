@@ -52,16 +52,19 @@ This is a **Node.js** and **Arduino**-based back-end system for managing student
    ```
 
 2. Install dependencies:
-   npm install
+
+```bash
+ npm install
+```
 
 3. Set up environment variables: Create a .env file with the following variables:
-   NODE_ENV=development
-   PORT = your-port
-   DB_HOST = localhost
-   DB_DIALECT = mysql
-   DB_USER_NAME = your-user-name
-   DB_PASSWORD = your-password
-   DB = your-db-name
+   NODE_ENV=development ,
+   PORT = your-port,
+   DB_HOST = localhost,
+   DB_DIALECT = mysql,
+   DB_USER_NAME = your-user-name,
+   DB_PASSWORD = your-password,
+   DB = your-db-name,
 
 ---
 
@@ -72,44 +75,44 @@ http://localhost:3000/api/v1
 
 Endpoints :
 
-1. Students
-   GET /students: Retrieve all students.
-   GET /students/:id: Retrieve a specific student by ID.
-   POST /students: Add a new student.
-   PUT /students/:id: Update a student by ID.
-   DELETE /students/:id: Delete a student by ID.
+1. Students:
+   GET /students: Retrieve all students. ,
+   GET /students/:id: Retrieve a specific student by ID. ,
+   POST /students: Add a new student. ,
+   PUT /students/:id: Update a student by ID. ,
+   DELETE /students/:id: Delete a student by ID. ,
 
-2. Courses
-   GET /courses: Retrieve all courses.
-   GET /courses/:id: Retrieve a specific course by ID.
-   POST /courses: Add a new course.
-   PUT /courses/:id: Update a course by ID.
-   DELETE /courses/:id: Delete a course by ID.
+2. Courses:
+   GET /courses: Retrieve all courses. ,
+   GET /courses/:id: Retrieve a specific course by ID. ,
+   POST /courses: Add a new course. ,
+   PUT /courses/:id: Update a course by ID. ,
+   DELETE /courses/:id: Delete a course by ID. ,
 
-3. Departments
-   GET /departments: Retrieve all departments.
-   GET /departments/:id: Retrieve a specific department by ID.
-   POST /departments: Add a new department.
-   PUT /departments/:id: Update a department by ID.
-   DELETE /departments/:id: Delete a department by ID.
+3. Departments:
+   GET /departments: Retrieve all departments. ,
+   GET /departments/:id: Retrieve a specific department by ID. ,
+   POST /departments: Add a new department. ,
+   PUT /departments/:id: Update a department by ID. ,
+   DELETE /departments/:id: Delete a department by ID. ,
 
-4. College Years
-   GET /collegeyears: Retrieve all college years.
-   GET /collegeyears/:id: Retrieve a specific college year by ID.
-   POST /collegeyears: Add a new college year.
-   PUT /collegeyears/:id: Update a college year by ID.
-   DELETE /collegeyears/:id: Delete a college year by ID.
+4. College Years:
+   GET /collegeyears: Retrieve all college years. ,
+   GET /collegeyears/:id: Retrieve a specific college year by ID. ,
+   POST /collegeyears: Add a new college year. ,
+   PUT /collegeyears/:id: Update a college year by ID. ,
+   DELETE /collegeyears/:id: Delete a college year by ID. ,
 
-5. Groups
-   GET /groups: Retrieve all groups.
-   GET /groups/:id: Retrieve a specific group by ID.
-   POST /groups: Add a new group.
-   PUT /groups/:id: Update a group by ID.
-   DELETE /groups/:id: Delete a group by ID.
+5. Groups:
+   GET /groups: Retrieve all groups. ,
+   GET /groups/:id: Retrieve a specific group by ID. ,
+   POST /groups: Add a new group. ,
+   PUT /groups/:id: Update a group by ID. ,
+   DELETE /groups/:id: Delete a group by ID. ,
 
-6. Attendance
-   GET /attendances: Retrieve all attendance records.
-   POST /attendances: Add a new attendance record.
+6. Attendance:
+   GET /attendances: Retrieve all attendance records. ,
+   POST /attendances: Add a new attendance record. ,
 
 ---
 
@@ -128,7 +131,7 @@ Use tools like Postman to test the APIs or integrate the front-end to interact w
 
 ---
 
-## Contribution Policy
+## Contributing Policy
 
 This repository is intended for reference and educational purposes only.
 Direct modifications or pull requests to this repository will not be accepted.
