@@ -12,7 +12,40 @@ const catchAsync = require('../utils/catchAsync');
 const AppError = require('../utils/appError');
 
 exports.getAllAttendances = catchAsync(async (req, res, next) => {
-  const attendance = await Attendance.findAll();
+  const attendance = await Attendance.findAll({
+    attributes: [
+      [sequelize.col('Course.semester'), 'semester'],
+      [sequelize.col('Course.coursename'), 'coursename'],
+      'attendancedate',
+      'attendancestatus',
+      [
+        sequelize.fn(
+          'concat',
+          sequelize.col('Student.firstname'),
+          ' ',
+          sequelize.col('Student.secondname'),
+          ' ',
+          sequelize.col('Student.thirdname'),
+          ' ',
+          sequelize.col('Student.lastname')
+        ),
+        'StudentName',
+      ],
+      'attendanceid',
+    ],
+    include: [
+      {
+        model: Student,
+        attributes: [], // No need to include individual student fields as we're concatenating them
+        required: true,
+      },
+      {
+        model: Course,
+        attributes: [], // No need to include individual course fields
+        required: true,
+      },
+    ],
+  });
 
   res.status(200).json({
     status: 'success',
