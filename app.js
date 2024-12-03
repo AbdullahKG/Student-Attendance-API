@@ -1,4 +1,5 @@
 const express = require('express');
+const cors = require('cors');
 require('./arduino/serialReader');
 const courseRoutes = require('./routes/courseRoutes');
 const groupRoutes = require('./routes/groupRoutes');
@@ -15,6 +16,12 @@ const app = express();
 // 1) middlewares
 app.use(express.json({ limit: '10kb' }));
 app.use(express.static(`${__dirname}/public`));
+app.use(
+  cors({
+    origin: 'http://localhost:3000', // client side url
+    credentials: true, // Enable sending cookies
+  })
+);
 
 // 2) routes
 app.use('/api/v1/courses', courseRoutes);
