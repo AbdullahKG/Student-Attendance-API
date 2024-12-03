@@ -7,6 +7,7 @@ const collegeYear = require('./collegeYearModel');
 const group = require('./groupModel');
 const student = require('./studentModel');
 const attendance = require('./attendanceRecordModel');
+const user = require('./userModel');
 
 // Define associations
 
@@ -78,4 +79,15 @@ course.hasMany(attendance, {
 });
 attendance.belongsTo(course, {
   foreignKey: 'courseid',
+});
+
+// Department 1:M Users
+department.hasMany(user, {
+  foreignKey: 'departmentid',
+  onDelete: 'CASCADE',
+  onUpdate: 'CASCADE',
+});
+
+user.belongsTo(department, {
+  foreignKey: 'departmentid',
 });

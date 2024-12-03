@@ -5,7 +5,8 @@ const groupRoutes = require('./routes/groupRoutes');
 const collegeYearRoutes = require('./routes/collegeYearRoutes');
 const departmentRoutes = require('./routes/departmentRoutes');
 const studentRoutes = require('./routes/studentRoutes');
-const attendanceRoute = require('./routes/attendanceRecordRoutes');
+const attendanceRoutes = require('./routes/attendanceRecordRoutes');
+const userRoutes = require('./routes/userRoutes');
 const globalErrorHandling = require('./controllers/errorController');
 const AppError = require('./utils/appError');
 
@@ -21,7 +22,8 @@ app.use('/api/v1/groups', groupRoutes);
 app.use('/api/v1/collegeYears', collegeYearRoutes);
 app.use('/api/v1/departments', departmentRoutes);
 app.use('/api/v1/students', studentRoutes);
-app.use('/api/v1/attendances', attendanceRoute);
+app.use('/api/v1/attendances', attendanceRoutes);
+app.use('/api/v1/users', userRoutes);
 
 app.all('*', (req, res, next) => {
   next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));

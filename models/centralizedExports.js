@@ -7,6 +7,7 @@ const CollegeYear = require('./collegeYearModel');
 const Group = require('./groupModel');
 const Student = require('./studentModel');
 const Attendance = require('./attendanceRecordModel');
+const User = require('../models/userModel');
 
 // define the relatioships between the tables
 require('./associations');
@@ -20,4 +21,5 @@ module.exports = {
   Group,
   Attendance,
   Student,
+  User,
 };

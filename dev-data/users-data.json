@@ -1,0 +1,14 @@
+[
+  {
+    "username": "Abdullah Omar",
+    "password": "$2a$12$72fEO3MF4uwTqihGQLu2c.EyowOtZXxASA83CVJSdWTSWmFxNrX76",
+    "role": "admin",
+    "departmentid": 1
+  },
+  {
+    "username": "Abdullah Walled",
+    "password": "$2a$12$gp5SiaTiSmJZLsrzDU/WNem7ELI5.kCrHAmioK/8sM4gPTXACQ5oW",
+    "role": "teacher",
+    "departmentid": 1
+  }
+]

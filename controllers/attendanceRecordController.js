@@ -68,21 +68,9 @@ exports.CreateAttendance = catchAsync(async (req, res, next) => {
     return next(new AppError('there is no student with that cardID', 404));
   }
 
-  // get course id based on a query consist of joining tables
+  // get course id
   const course = await Course.findOne({
     attributes: ['courseid'],
-    include: [
-      {
-        model: Department,
-        attributes: [], // no need to get any attributes from departments table
-        required: true,
-      },
-      {
-        model: CollegeYear,
-        attributes: [], // no need to get any attributes from college years table
-        required: true,
-      },
-    ],
     where: { coursename: req.body.coursename },
     raw: true,
   });
