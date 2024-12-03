@@ -47,7 +47,7 @@ exports.login = catchAsync(async (req, res, next) => {
   const user = await User.findOne({ where: { username: userName }, raw: true });
 
   if (!user || !(await PHC.comparePassword(password, user.password))) {
-    return next(new AppError('invalid user name or password', 401));
+    return next(new AppError('invalid username or password', 401));
   }
 
   // 3) If everything ok, send token to client
