@@ -13,6 +13,24 @@ exports.getAllCourses = catchAsync(async (req, res, next) => {
   });
 });
 
+exports.getCoursesNameOnly = catchAsync(async (req, res, next) => {
+  const course = await Course.findAll({
+    attributes: ['courseid', 'coursename'],
+    where: {
+      departmentid: req.query.departmentid,
+      yearid: req.query.yearid,
+      semester: req.query.semester,
+    },
+  });
+
+  res.status(200).json({
+    status: 'success',
+    data: {
+      course,
+    },
+  });
+});
+
 exports.createCourse = catchAsync(async (req, res, next) => {
   const newCourse = await Course.create({
     coursename: req.body.coursename,
