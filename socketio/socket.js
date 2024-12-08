@@ -22,7 +22,9 @@ const initializeSocket = (server) => {
 
 // Function to send Card ID to a specific device
 const sendCardIDToDevice = (cardID) => {
-  if (cardID) {
+  if (cardID === 'Place your card...') {
+    return;
+  } else if (cardID) {
     io.emit('cardID', cardID);
     console.log(`Card ID : ${cardID} sent successfuly`);
   } else {
