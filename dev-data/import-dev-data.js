@@ -8,6 +8,7 @@ const courseModel = require('../models/courseModel');
 const departmentModel = require('../models/departmentModel');
 const studentModel = require('../models/studentModel');
 const userModel = require('../models/userModel');
+const attendanceModel = require('../models/attendanceRecordModel');
 
 dotenv.config({ path: './config.env' });
 
@@ -76,7 +77,8 @@ const deleteData = async () => {
     //await departmentModel.destroy({ truencate: true });
     //await courseModel.destroy({ truncate: true });
     //await studentModel.destroy({ truncate: true });
-    await userModel.destroy({ truncate: true });
+    //await userModel.destroy({ truncate: true });
+    await attendanceModel.destroy({ truncate: true });
     console.log('Data successfully deleted!');
   } catch (err) {
     console.log(err);
