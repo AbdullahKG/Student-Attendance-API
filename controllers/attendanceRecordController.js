@@ -2,8 +2,6 @@ const {
   Attendance,
   Course,
   Student,
-  CollegeYear,
-  Department,
   sequelize,
 } = require('../models/centralizedExports');
 
@@ -12,39 +10,67 @@ const catchAsync = require('../utils/catchAsync');
 const AppError = require('../utils/appError');
 
 exports.getAllAttendances = catchAsync(async (req, res, next) => {
+  const { departmentid, yearid, course, semester, group } = req.query;
+
+  // Build the `where` clause dynamically
+  const whereClause = {};
+
+  if (departmentid) {
+    whereClause['$course.departmentid$'] = departmentid;
+  }
+
+  if (yearid) {
+    whereClause['$course.yearid$'] = yearid;
+  }
+
+  if (course) {
+    whereClause['$course.courseid$'] = course;
+  }
+
+  if (semester) {
+    whereClause['$course.semester$'] = semester;
+  }
+
+  if (group) {
+    whereClause['$student.groupid$'] = group;
+  }
+
   const attendance = await Attendance.findAll({
     attributes: [
-      [sequelize.col('Course.semester'), 'semester'],
-      [sequelize.col('Course.coursename'), 'coursename'],
+      [sequelize.col('course.semester'), 'semester'],
+      [sequelize.col('course.coursename'), 'coursename'],
       'attendancedate',
       'attendancestatus',
       [
         sequelize.fn(
           'concat',
-          sequelize.col('Student.firstname'),
+          sequelize.col('student.firstname'),
           ' ',
-          sequelize.col('Student.secondname'),
+          sequelize.col('student.secondname'),
           ' ',
-          sequelize.col('Student.thirdname'),
+          sequelize.col('student.thirdname'),
           ' ',
-          sequelize.col('Student.lastname')
+          sequelize.col('student.lastname')
         ),
-        'StudentName',
+        'studentName',
       ],
-      'attendanceid',
+      [sequelize.col('student.displayid'), 'ID'],
     ],
     include: [
       {
         model: Student,
-        attributes: [], // No need to include individual student fields as we're concatenating them
+        attributes: [],
         required: true,
       },
       {
         model: Course,
-        attributes: [], // No need to include individual course fields
+        attributes: [],
         required: true,
       },
     ],
+    where: whereClause, // Apply the dynamic filters
+    order: sequelize.col('studentName'),
+    raw: true,
   });
 
   res.status(200).json({
@@ -59,48 +85,58 @@ exports.getAllAttendances = catchAsync(async (req, res, next) => {
 exports.CreateAttendance = catchAsync(async (req, res, next) => {
   // get student based on card id
   const studentInfo = await Student.findOne({
-    attributes: ['studentid'],
+    attributes: [
+      'studentid',
+      'firstname',
+      'secondname',
+      'thirdname',
+      'lastname',
+    ],
     where: { cardid: req.body.cardID },
     raw: true,
   });
 
   if (!studentInfo) {
-    return next(new AppError('there is no student with that cardID', 404));
-  }
-
-  // get course id
-  const course = await Course.findOne({
-    attributes: ['courseid'],
-    where: { coursename: req.body.coursename },
-    raw: true,
-  });
-
-  if (!course) {
     return next(
       new AppError(
-        `there is no course with this name ${req.body.coursename}`,
+        `there is no student with that cardID ${req.body.cardID}`,
         404
       )
     );
   }
 
   // check if there is an attendance for the specified student
+  const currentDate = formattedDate();
   const hasAttendance = await Attendance.findOne({
-    where: { studentid: studentInfo.studentid },
+    where: {
+      studentid: studentInfo.studentid,
+      courseid: req.body.course,
+      attendancedate: currentDate,
+    },
+    raw: true,
   });
 
+  const studentName =
+    studentInfo.firstname +
+    ' ' +
+    studentInfo.secondname +
+    ' ' +
+    studentInfo.thirdname +
+    ' ' +
+    studentInfo.lastname;
+
   if (hasAttendance) {
-    return next(new AppError('the student already attended this class', 200));
+    return next(
+      new AppError(`${studentName} already attended this class`, 409)
+    );
   }
 
   // If everything ok , create attendance
-  const currentDate = formattedDate();
-
   const newAttendance = await Attendance.create({
     attendancedate: currentDate,
-    attendancestatus: req.body.attendancestatus,
+    attendancestatus: req.body.attendanceStatus,
     studentid: studentInfo.studentid,
-    courseid: course.courseid,
+    courseid: req.body.course,
   });
 
   res.status(201).json({
@@ -108,5 +144,67 @@ exports.CreateAttendance = catchAsync(async (req, res, next) => {
     data: {
       newAttendance,
     },
+  });
+});
+
+exports.createAbsent = catchAsync(async (req, res, next) => {
+  // get only the student id
+  const studentInfo = await Student.findAll({
+    attributes: ['studentid'],
+    where: {
+      departmentid: req.body.departmentid,
+      yearid: req.body.yearid,
+      groupid: req.body.groupid,
+    },
+    raw: true,
+  });
+
+  if (!studentInfo) {
+    return next(new AppError(`there is no students`, 404));
+  }
+
+  // check if there is an attendance for all students
+  const currentDate = formattedDate();
+  const hasAttendance = await Attendance.findAll({
+    attributes: ['studentid'],
+    where: {
+      courseid: req.body.courseid,
+      attendancedate: currentDate,
+    },
+    raw: true,
+  });
+
+  // Extract arrays of IDs
+  const allStudentIds = studentInfo.map((student) => student.studentid);
+  const attendedStudentIds = hasAttendance.map(
+    (attendance) => attendance.studentid
+  );
+
+  // Find students who did not attend
+  const absentStudentIds = allStudentIds.filter(
+    (id) => !attendedStudentIds.includes(id)
+  );
+
+  if (absentStudentIds === 0) {
+    res.status(200).json({
+      status: 'success',
+      message: `All students have attended.`,
+    });
+  }
+
+  if (absentStudentIds > 0) {
+    const absentRecords = absentStudentIds.map((id) => ({
+      studentid: id,
+      courseid: req.body.courseid,
+      attendancedate: currentDate,
+      attendancestatus: req.body.attendanceStatus,
+    }));
+
+    await Attendance.bulkCreate(absentRecords);
+  }
+
+  res.status(201).json({
+    status: 'success',
+    message: `${absentStudentIds.length}`,
   });
 });
