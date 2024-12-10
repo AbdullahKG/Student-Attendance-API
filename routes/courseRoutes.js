@@ -5,6 +5,7 @@ const authController = require('../controllers/authController');
 const router = express.Router();
 
 router.route('/course-names').get(courseController.getCoursesNameOnly);
+router.get('/count/:departmentid', courseController.countAllCourses);
 
 router
   .route('/')

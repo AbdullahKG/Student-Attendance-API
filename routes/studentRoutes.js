@@ -4,9 +4,7 @@ const authController = require('../controllers/authController');
 
 const router = express.Router();
 
-// protect all routes after this middleware
-router.use(authController.protect);
-router.use(authController.restrictTo('admin'));
+router.get('/count/:departmentid', studentController.countAllStudents);
 
 router
   .route('/')

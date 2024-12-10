@@ -3,7 +3,8 @@ const attendanceController = require('../controllers/attendanceRecordController'
 
 const router = express.Router();
 
-router.route('/create-absent').post(attendanceController.createAbsent);
+router.post('/create-absent', attendanceController.createAbsent);
+router.get('/:departmentid', attendanceController.countAllAttendances);
 
 router
   .route('/')
