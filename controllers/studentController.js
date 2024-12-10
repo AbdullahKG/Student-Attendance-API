@@ -1,4 +1,4 @@
-const { Student } = require('../models/centralizedExports');
+const { Student, sequelize } = require('../models/centralizedExports');
 const catchAsync = require('../utils/catchAsync');
 const AppError = require('../utils/appError');
 
@@ -21,6 +21,27 @@ exports.getAllStudents = catchAsync(async (req, res, next) => {
     status: 'success',
     data: {
       student,
+    },
+  });
+});
+
+exports.countAllStudents = catchAsync(async (req, res, next) => {
+  const departmentid = req.params.departmentid;
+
+  const totalStudent = await Student.findAll({
+    attributes: [
+      [sequelize.fn('COUNT', sequelize.col('studentid')), 'totalStudents'],
+    ],
+    where: {
+      departmentid: departmentid,
+    },
+    raw: true,
+  });
+
+  res.status(200).json({
+    status: 'success',
+    data: {
+      totalStudent,
     },
   });
 });

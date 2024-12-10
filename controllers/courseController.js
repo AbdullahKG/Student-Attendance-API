@@ -1,6 +1,28 @@
-const { Course } = require('../models/centralizedExports');
+const { Course, sequelize } = require('../models/centralizedExports');
 const catchAsync = require('../utils/catchAsync');
 const AppError = require('../utils/appError');
+
+// this count courses for a specific department
+exports.countAllCourses = catchAsync(async (req, res, next) => {
+  const departmentid = req.params.departmentid;
+
+  const totalCourse = await Course.findAll({
+    attributes: [
+      [sequelize.fn('COUNT', sequelize.col('courseid')), 'totalCourses'],
+    ],
+    where: {
+      departmentid: departmentid,
+    },
+    raw: true,
+  });
+
+  res.status(200).json({
+    status: 'success',
+    data: {
+      totalCourse,
+    },
+  });
+});
 
 exports.getAllCourses = catchAsync(async (req, res, next) => {
   const course = await Course.findAll();

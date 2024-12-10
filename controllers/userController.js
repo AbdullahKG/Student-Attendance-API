@@ -1,4 +1,4 @@
-const { User } = require('../models/centralizedExports');
+const { User, sequelize } = require('../models/centralizedExports');
 const AppError = require('../utils/appError');
 const catchAsync = require('../utils/catchAsync');
 const hashPassword = require('../utils/passwordHashingAndComparing');
@@ -11,6 +11,27 @@ exports.getAllUsers = catchAsync(async (req, res, next) => {
     result: user.length,
     data: {
       user,
+    },
+  });
+});
+
+exports.countAllUsers = catchAsync(async (req, res, next) => {
+  const departmentid = req.params.departmentid;
+
+  const totalUser = await User.findAll({
+    attributes: [
+      [sequelize.fn('COUNT', sequelize.col('userid')), 'totalUsers'],
+    ],
+    where: {
+      departmentid: departmentid,
+    },
+    raw: true,
+  });
+
+  res.status(200).json({
+    status: 'success',
+    data: {
+      totalUser,
     },
   });
 });

@@ -9,6 +9,38 @@ const formattedDate = require('../utils/getFormattedDate');
 const catchAsync = require('../utils/catchAsync');
 const AppError = require('../utils/appError');
 
+// this count attendances for a specific department
+exports.countAllAttendances = catchAsync(async (req, res, next) => {
+  const departmentid = req.params.departmentid;
+
+  const totalAttendance = await Attendance.findAll({
+    attributes: [
+      [
+        sequelize.fn('COUNT', sequelize.col('attendanceid')),
+        'totalAttendances',
+      ],
+    ],
+    include: [
+      {
+        model: Course,
+        attributes: [],
+        required: true,
+        where: {
+          departmentid: departmentid,
+        },
+      },
+    ],
+    raw: true,
+  });
+
+  res.status(200).json({
+    status: 'success',
+    data: {
+      totalAttendance,
+    },
+  });
+});
+
 exports.getAllAttendances = catchAsync(async (req, res, next) => {
   const { departmentid, yearid, course, semester, group } = req.query;
 
