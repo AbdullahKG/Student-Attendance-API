@@ -1,26 +1,64 @@
-const { Student, sequelize } = require('../models/centralizedExports');
+const {
+  Student,
+  Department,
+  CollegeYear,
+  Group,
+  sequelize,
+} = require('../models/centralizedExports');
 const catchAsync = require('../utils/catchAsync');
 const AppError = require('../utils/appError');
 
-const filterObj = (obj) => {
-  // Filter out undefined fields from the request body
-  const newObj = {};
-  Object.keys(obj).forEach((key) => {
-    if (obj.body[key] !== undefined) {
-      newObj[key] = obj.body[key];
-    }
-  });
-
-  return newObj;
-};
-
 exports.getAllStudents = catchAsync(async (req, res, next) => {
-  const student = await Student.findAll();
+  const students = await Student.findAll({
+    attributes: [
+      ['studentid', 'realID'],
+      ['displayid', 'ID'],
+      [
+        sequelize.fn(
+          'concat',
+          sequelize.col('firstname'),
+          ' ',
+          sequelize.col('secondname'),
+          ' ',
+          sequelize.col('thirdname'),
+          ' ',
+          sequelize.col('lastname')
+        ),
+        'studentName',
+      ],
+      'cardid',
+      [sequelize.col('group.grouptype'), 'groupname'],
+      [sequelize.col('collegeyear.yearname'), 'year'],
+      [sequelize.col('department.departmentname'), 'departmentname'],
+    ],
+    include: [
+      {
+        model: CollegeYear,
+        attributes: [],
+        required: true,
+      },
+      {
+        model: Department,
+        attributes: [],
+        required: true,
+      },
+      {
+        model: Group,
+        attributes: [],
+        required: true,
+      },
+    ],
+    where: {
+      groupid: req.query.groupid,
+      yearid: req.query.yearid,
+      departmentid: req.query.departmentid,
+    },
+  });
 
   res.status(200).json({
     status: 'success',
     data: {
-      student,
+      students,
     },
   });
 });
@@ -48,13 +86,13 @@ exports.countAllStudents = catchAsync(async (req, res, next) => {
 
 exports.CreateStudent = catchAsync(async (req, res, next) => {
   const newStudent = await Student.create({
-    displayid: req.body.displayid,
+    displayid: req.body.DisplayID,
     firstname: req.body.firstname,
     secondname: req.body.secondname,
     thirdname: req.body.thirdname,
     lastname: req.body.lastname,
-    cardid: req.body.cardid,
-    departmentid: req.body.departmentid,
+    cardid: req.body.cardID,
+    departmentid: req.body.departmentId,
     yearid: req.body.yearid,
     groupid: req.body.groupid,
   });
@@ -85,14 +123,24 @@ exports.getStudent = catchAsync(async (req, res, next) => {
 });
 
 exports.updateStudent = catchAsync(async (req, res, next) => {
-  const filteredBody = filterObj(req.body);
-
-  // Perform the update only with the fields provided in the request
-  const [updatedRows] = await Student.update(filteredBody, {
-    where: {
-      studentid: req.params.studentid,
+  const [updatedRows] = await Student.update(
+    {
+      displayid: req.body.DisplayID,
+      firstname: req.body.firstname,
+      secondname: req.body.secondname,
+      thirdname: req.body.thirdname,
+      lastname: req.body.lastname,
+      cardid: req.body.cardID,
+      departmentid: req.body.departmentId,
+      yearid: req.body.yearid,
+      groupid: req.body.groupid,
     },
-  });
+    {
+      where: {
+        studentid: req.body.studentid,
+      },
+    }
+  );
 
   if (!updatedRows) {
     return next(new AppError('now rows were updated', 404));
