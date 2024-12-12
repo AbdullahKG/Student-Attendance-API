@@ -1,4 +1,9 @@
-const { Course, sequelize } = require('../models/centralizedExports');
+const {
+  Course,
+  Department,
+  CollegeYear,
+  sequelize,
+} = require('../models/centralizedExports');
 const catchAsync = require('../utils/catchAsync');
 const AppError = require('../utils/appError');
 
@@ -25,7 +30,33 @@ exports.countAllCourses = catchAsync(async (req, res, next) => {
 });
 
 exports.getAllCourses = catchAsync(async (req, res, next) => {
-  const course = await Course.findAll();
+  const course = await Course.findAll({
+    attributes: [
+      'courseid',
+      'coursename',
+      'semester',
+      [sequelize.col('collegeyear.yearname'), 'yearname'],
+      [sequelize.col('department.departmentname'), 'departmentname'],
+    ],
+    include: [
+      {
+        model: Department,
+        attributes: [],
+        required: true,
+      },
+      {
+        model: CollegeYear,
+        attributes: [],
+        required: true,
+      },
+    ],
+    where: {
+      yearid: req.query.yearid,
+      semester: req.query.semester,
+      departmentid: req.query.departmentId,
+    },
+    raw: true,
+  });
 
   res.status(200).json({
     status: 'success',
@@ -56,6 +87,9 @@ exports.getCoursesNameOnly = catchAsync(async (req, res, next) => {
 exports.createCourse = catchAsync(async (req, res, next) => {
   const newCourse = await Course.create({
     coursename: req.body.coursename,
+    departmentid: req.body.departmentId,
+    yearid: req.body.yearid,
+    semester: req.body.semester,
   });
 
   res.status(201).json({
@@ -84,11 +118,14 @@ exports.getCourse = catchAsync(async (req, res, next) => {
 });
 
 exports.updateCourse = catchAsync(async (req, res, next) => {
+  console.log(req.params);
   const [updatedRows] = await Course.update(
     { coursename: req.body.coursename },
     {
       where: {
-        courseid: req.params.courseid,
+        courseid: req.body.courseid,
+        departmentid: req.body.departmentid,
+        yearid: req.body.yearid,
       },
     }
   );
