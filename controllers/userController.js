@@ -1,10 +1,28 @@
-const { User, sequelize } = require('../models/centralizedExports');
+const { User, Department, sequelize } = require('../models/centralizedExports');
 const AppError = require('../utils/appError');
 const catchAsync = require('../utils/catchAsync');
-const hashPassword = require('../utils/passwordHashingAndComparing');
+const { hashPasword } = require('../utils/passwordHashingAndComparing');
 
 exports.getAllUsers = catchAsync(async (req, res, next) => {
-  const user = await User.findAll();
+  const user = await User.findAll({
+    attributes: [
+      'userid',
+      'username',
+      'role',
+      [sequelize.col('department.departmentname'), 'departmentName'],
+    ],
+    include: [
+      {
+        model: Department,
+        attributes: [],
+        required: true,
+      },
+    ],
+    where: {
+      departmentid: req.query.departmentid,
+    },
+    raw: true,
+  });
 
   res.status(200).json({
     status: 'successful',
@@ -37,13 +55,13 @@ exports.countAllUsers = catchAsync(async (req, res, next) => {
 });
 
 exports.createUser = catchAsync(async (req, res, next) => {
-  const hashedPassword = await hashPassword(req.body.password);
+  const hashedPassword = await hashPasword(req.body.password);
 
   const newUser = await User.create({
     username: req.body.username,
     password: hashedPassword,
     role: req.body.role,
-    departmentid: req.body.departmentid,
+    departmentid: req.body.departmentId,
   });
 
   res.status(201).json({
@@ -83,7 +101,7 @@ exports.updateUser = catchAsync(async (req, res, next) => {
   );
 
   if (!updatedRows) {
-    return next(new AppError('now rows were updated', 404));
+    return next(new AppError('now rows were updated', 200));
   }
 
   res.status(200).json({
