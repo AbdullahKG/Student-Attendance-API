@@ -8,6 +8,7 @@ const {
 const formattedDate = require('../utils/getFormattedDate');
 const catchAsync = require('../utils/catchAsync');
 const AppError = require('../utils/appError');
+const getDate = require('../utils/getFormattedDate');
 
 // this count attendances for a specific department
 exports.countAllAttendances = catchAsync(async (req, res, next) => {
@@ -43,6 +44,7 @@ exports.countAllAttendances = catchAsync(async (req, res, next) => {
 
 exports.getAllAttendances = catchAsync(async (req, res, next) => {
   const { departmentid, yearid, course, semester, group } = req.query;
+  const currentDate = getDate();
 
   // Build the `where` clause dynamically
   const whereClause = {};
@@ -65,6 +67,10 @@ exports.getAllAttendances = catchAsync(async (req, res, next) => {
 
   if (group) {
     whereClause['$student.groupid$'] = group;
+  }
+
+  if (currentDate) {
+    whereClause['$attendancedate$'] = currentDate;
   }
 
   const attendance = await Attendance.findAll({
