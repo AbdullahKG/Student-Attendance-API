@@ -3,6 +3,7 @@ const sequelize = require('../sequelizeConnection');
 const collegeYear = require('./collegeYearModel');
 const department = require('./departmentModel');
 const group = require('./groupModel');
+const user = require('./userModel');
 
 const student = sequelize.define(
   'student',
@@ -60,6 +61,14 @@ const student = sequelize.define(
       references: {
         model: group,
         key: 'groupid',
+      },
+    },
+    userid: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: user,
+        key: 'userid',
       },
     },
   },
