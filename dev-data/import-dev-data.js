@@ -54,12 +54,12 @@ const userData = JSON.parse(fs.readFileSync(`${__dirname}/users-data.json`));
 // import all data into DB
 const importData = async () => {
   try {
-    //await collegeYearModel.bulkCreate(yearData);
-    //await groupModel.bulkCreate(groupData);
+    await collegeYearModel.bulkCreate(yearData);
+    await groupModel.bulkCreate(groupData);
     //await departmentModel.bulkCreate(departmentData);
-    //await courseModel.bulkCreate(courseData);
-    //await studentModel.bulkCreate(studentData);
-    await userModel.bulkCreate(userData);
+    await courseModel.bulkCreate(courseData);
+    await studentModel.bulkCreate(studentData);
+    //await userModel.bulkCreate(userData);
     console.log('Data successfully loaded!');
   } catch (err) {
     console.log(err);
@@ -74,11 +74,11 @@ const deleteData = async () => {
   try {
     //await collegeYearModel.destroy({ truncate: true });
     //await groupModel.destroy({ truncate: true });
-    //await departmentModel.destroy({ truencate: true });
+    //await departmentModel.destroy({ truncate: true });
     //await courseModel.destroy({ truncate: true });
     //await studentModel.destroy({ truncate: true });
     //await userModel.destroy({ truncate: true });
-    await attendanceModel.destroy({ truncate: true });
+    //await attendanceModel.destroy({ truncate: true });
     console.log('Data successfully deleted!');
   } catch (err) {
     console.log(err);
