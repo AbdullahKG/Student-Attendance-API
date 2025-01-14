@@ -28,8 +28,9 @@ exports.getAllStudents = catchAsync(async (req, res, next) => {
       ],
       'cardid',
       [sequelize.col('group.grouptype'), 'groupname'],
-      [sequelize.col('collegeyear.yearname'), 'year'],
+      [sequelize.col('collegeYear.yearname'), 'year'],
       [sequelize.col('department.departmentname'), 'departmentname'],
+      'userid',
     ],
     include: [
       {
@@ -95,6 +96,7 @@ exports.CreateStudent = catchAsync(async (req, res, next) => {
     departmentid: req.body.departmentId,
     yearid: req.body.yearid,
     groupid: req.body.groupid,
+    userid: req.body.userid,
   });
 
   res.status(201).json({
