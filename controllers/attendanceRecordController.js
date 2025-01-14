@@ -247,25 +247,23 @@ exports.createAbsent = catchAsync(async (req, res, next) => {
   });
 });
 
-exports.getStudentAttendnace = catchAsync(async (req,res,next)=>{
-  const { departmentid, yearid, course, semester, group , userid } = req.query;
-  
+exports.getStudentAttendnace = catchAsync(async (req, res, next) => {
+  const { departmentid, yearid, course, semester, group, userid } = req.query;
 
   // get studentid by the userid to user it in the where clause
   const studentid = await Student.findOne({
-    attributes : ['studentid'] ,
-    where : {
-      userid : userid,
+    attributes: ['studentid'],
+    where: {
+      userid: userid,
       departmentid: departmentid,
       yearid: yearid,
       groupid: group,
     },
-    raw : true
+    raw: true,
   });
-  
 
-  if(!studentid) {
-    return next(new AppError('no student with this id found' , 404))
+  if (!studentid) {
+    return next(new AppError('no student with this id found', 404));
   }
 
   const whereClause = {};
@@ -293,7 +291,6 @@ exports.getStudentAttendnace = catchAsync(async (req,res,next)=>{
   if (studentid) {
     whereClause['$student.studentid$'] = studentid.studentid;
   }
-  
 
   const attendance = await Attendance.findAll({
     attributes: [
@@ -301,13 +298,12 @@ exports.getStudentAttendnace = catchAsync(async (req,res,next)=>{
       [sequelize.col('course.coursename'), 'coursename'],
       'attendancedate',
       'attendancestatus',
-      
     ],
     include: [
       {
         model: Student,
         attributes: [],
-        required: true
+        required: true,
       },
       {
         model: Course,
@@ -325,5 +321,4 @@ exports.getStudentAttendnace = catchAsync(async (req,res,next)=>{
       attendance,
     },
   });
-
 });
