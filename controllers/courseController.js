@@ -35,7 +35,7 @@ exports.getAllCourses = catchAsync(async (req, res, next) => {
       'courseid',
       'coursename',
       'semester',
-      [sequelize.col('collegeyear.yearname'), 'yearname'],
+      [sequelize.col('collegeYear.yearname'), 'yearname'],
       [sequelize.col('department.departmentname'), 'departmentname'],
     ],
     include: [
