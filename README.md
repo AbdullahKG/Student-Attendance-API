@@ -86,40 +86,44 @@ Endpoints :
    GET /students: Retrieve all students.
    GET /students/:id: Retrieve a specific student by ID.
    POST /students: Add a new student.
-   PUT /students/:id: Update a student by ID.
+   PATCH /students/:id: Update a student by ID.
    DELETE /students/:id: Delete a student by ID.
 
 2. Courses:
    GET /courses: Retrieve all courses.
    GET /courses/:id: Retrieve a specific course by ID.
+   GET /courses/course-names: Retrieve the names of the courses only.
+   GET /courses/count/:departmentid: Count all courses for a certain department.
    POST /courses: Add a new course.
-   PUT /courses/:id: Update a course by ID.
+   PATCH /courses/:id: Update a course by ID.
    DELETE /courses/:id: Delete a course by ID.
 
 3. Departments:
    GET /departments: Retrieve all departments.
    GET /departments/:id: Retrieve a specific department by ID.
    POST /departments: Add a new department.
-   PUT /departments/:id: Update a department by ID.
+   PATCH /departments/:id: Update a department by ID.
    DELETE /departments/:id: Delete a department by ID.
 
 4. College Years:
    GET /collegeyears: Retrieve all college years.
    GET /collegeyears/:id: Retrieve a specific college year by ID.
    POST /collegeyears: Add a new college year.
-   PUT /collegeyears/:id: Update a college year by ID.
+   PATCH /collegeyears/:id: Update a college year by ID.
    DELETE /collegeyears/:id: Delete a college year by ID.
 
 5. Groups:
    GET /groups: Retrieve all groups.
    GET /groups/:id: Retrieve a specific group by ID.
    POST /groups: Add a new group.
-   PUT /groups/:id: Update a group by ID.
+   PATCH /groups/:id: Update a group by ID.
    DELETE /groups/:id: Delete a group by ID.
 
 6. Attendance:
    GET /attendances: Retrieve all attendance records.
+   GET /attendances/student-attendance: Retrieve attendance records for a certain student based on a course he chooses.
    POST /attendances: Add a new attendance record.
+   POST /attendances/create-absent: Add the student who didn't scan as absent.
 ```
 
 ---
