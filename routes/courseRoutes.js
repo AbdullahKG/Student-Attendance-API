@@ -4,7 +4,10 @@ const authController = require('../controllers/authController');
 
 const router = express.Router();
 
+router.use(authController.protect);
 router.route('/course-names').get(courseController.getCoursesNameOnly);
+
+router.use(authController.protect, authController.restrictTo('admin'));
 router.get('/count/:departmentid', courseController.countAllCourses);
 
 router

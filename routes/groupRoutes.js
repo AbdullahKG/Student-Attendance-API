@@ -3,6 +3,7 @@ const groupController = require('../controllers/groupController');
 
 const router = express.Router();
 
+router.use(authController.protect, authController.restrictTo('admin'));
 router
   .route('/')
   .get(groupController.getAllGroups)

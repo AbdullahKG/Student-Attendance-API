@@ -3,6 +3,7 @@ const departmentController = require('../controllers/departmentController');
 
 const router = express.Router();
 
+router.use(authController.protect, authController.restrictTo('admin'));
 router
   .route('/')
   .get(departmentController.getAllDepartments)

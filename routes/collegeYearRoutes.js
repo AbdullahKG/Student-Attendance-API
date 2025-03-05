@@ -3,6 +3,7 @@ const collegeYearController = require('../controllers/collegeYearController');
 
 const router = express.Router();
 
+router.use(authController.protect, authController.restrictTo('admin'));
 router
   .route('/')
   .get(collegeYearController.getAllCollegeYears)
