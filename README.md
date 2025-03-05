@@ -148,9 +148,3 @@ This repository is intended for reference and educational purposes only.
 Direct modifications or pull requests to this repository will not be accepted.
 Fork the repository if you wish to modify the code for personal use.
 
----
-
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
