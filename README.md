@@ -8,7 +8,6 @@
 6. [Database Design](#database-design)
 7. [Usage](#usage)
 8. [Contributing Policy](#contributing-policy)
-9. [License](#license)
 
 ---
 
@@ -148,20 +147,3 @@ Use tools like Postman to test the APIs or integrate the front-end to interact w
 This repository is intended for reference and educational purposes only.
 Direct modifications or pull requests to this repository will not be accepted.
 Fork the repository if you wish to modify the code for personal use.
-
----
-
-## License
-
-Copyright (c) 2024 Abdullah Omar
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to use
-the Software for personal and educational purposes only.
-
-Modification, distribution, or commercial use of this software is prohibited
-without prior written consent.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
